@@ -95,7 +95,7 @@ public class UserResourceTest {
 				"address": "Hemlös",
 				"email": "folke@caw.gull"
 			}""";
-		// Lägg till användaren, borde vara tillåtet en gång
+		// Lägg till användaren, bör vara tillåtet en gång
 		given().
 			accept(ContentType.JSON).
 			contentType(ContentType.JSON).
@@ -106,7 +106,7 @@ public class UserResourceTest {
 			assertThat().
 			statusCode(HttpStatus.SC_CREATED);
 		
-		// Lägg till igen, borde inte vara tillåtet då den redan existerar
+		// Lägg till igen, bör inte vara tillåtet då den redan existerar
 		given().
 			accept(ContentType.JSON).
 			contentType(ContentType.JSON).
