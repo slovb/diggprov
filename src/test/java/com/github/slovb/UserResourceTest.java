@@ -72,7 +72,8 @@ public class UserResourceTest {
 			{
 				"name": "Kurre Knös",
 				"address": "Svartskogen 1, 1819 Calisota",
-				"email": "kurre@quack.duck"
+				"email": "kurre@quack.duck",
+				"telephone": "555-10003"
 			}""";
 		given().
 			accept(ContentType.JSON).
@@ -84,6 +85,43 @@ public class UserResourceTest {
 			assertThat().
 			statusCode(HttpStatus.SC_CREATED);
 	}
+
+	@Test
+	@DisplayName("POST malformed, expect BAD REQUEST")
+	@Tag("POST")
+	public void testCanNotPostNonsense() {
+		String json = "jPe&BEtaa";
+		given().
+			accept(ContentType.JSON).
+			contentType(ContentType.JSON).
+			body(json).
+		when().
+			post(URL).
+		then().
+			assertThat().
+			statusCode(HttpStatus.SC_BAD_REQUEST);
+	}
+
+	@Test
+	@DisplayName("POST missing telephone, expect BAD REQUEST")
+	@Tag("POST")
+	public void testCanNotPostIncompleteEntry() {
+		String json = """
+			{
+				"name": "Dunhilde O'Rapp",
+				"address": "Irland",
+				"email": "dunhilde@quack.duck"
+			}""";
+		given().
+			accept(ContentType.JSON).
+			contentType(ContentType.JSON).
+			body(json).
+		when().
+			post(URL).
+		then().
+			assertThat().
+			statusCode(HttpStatus.SC_BAD_REQUEST);
+	}
 	
 	@Test
 	@DisplayName("POST same user twice, expect OK and then FORBIDDEN")
@@ -93,7 +131,8 @@ public class UserResourceTest {
 			{
 				"name": "Folke Fiskmås",
 				"address": "Hemlös",
-				"email": "folke@caw.gull"
+				"email": "folke@caw.gull",
+				"telephone": "555-55000"
 			}""";
 		// Lägg till användaren, bör vara tillåtet en gång
 		given().
