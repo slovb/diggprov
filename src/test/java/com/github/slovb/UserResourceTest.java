@@ -9,51 +9,41 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-
+import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.common.mapper.TypeRef;
 import io.restassured.http.ContentType;
 
+/**
+ * Tests for UserResource.
+ */
 @QuarkusTest
+@TestHTTPEndpoint(UserResource.class)
 public class UserResourceTest {
-	
-	public final String URL = "/digg/user";
-	
-	@BeforeAll
-	public static void setup() {
-		// TODO: Insert test data
-	}
-	
-	@AfterAll
-	public static void cleanup() {
-		// TODO: Remove test data
-	}
-	
+
 	@Test
 	@DisplayName("GET, expect JSON")
 	@Tag("GET")
 	public void	testGetIsJSON() {
 		given().
 		when().
-			get(URL).
+			get().
 		then().
 			assertThat().
 			statusCode(HttpStatus.SC_OK).
 			and().
 			contentType(ContentType.JSON);
 	}
-	
+
 	@Test
 	@DisplayName("GET, expect 3 entries having names ending with \" Anka\"")
 	@Tag("GET")
 	public void	testGetHasThreeDucks() {
-		List<Map<String, Object>> users = get(URL).as(new TypeRef<List<Map<String, Object>>>() {});
+		List<Map<String, Object>> users = get().as(new TypeRef<List<Map<String, Object>>>() {});
 		int ducks = 0;
 		for (Map<String, Object> user: users) {
 			String name = (String) user.get("name");
@@ -63,7 +53,7 @@ public class UserResourceTest {
 		}
 		assertThat(ducks, equalTo(3));	
 	}
-	
+
 	@Test
 	@DisplayName("POST, expect CREATED")
 	@Tag("POST")
@@ -80,7 +70,7 @@ public class UserResourceTest {
 			contentType(ContentType.JSON).
 			body(json).
 		when().
-			post(URL).
+			post().
 		then().
 			assertThat().
 			statusCode(HttpStatus.SC_CREATED);
@@ -96,7 +86,7 @@ public class UserResourceTest {
 			contentType(ContentType.JSON).
 			body(json).
 		when().
-			post(URL).
+			post().
 		then().
 			assertThat().
 			statusCode(HttpStatus.SC_BAD_REQUEST);
@@ -117,12 +107,12 @@ public class UserResourceTest {
 			contentType(ContentType.JSON).
 			body(json).
 		when().
-			post(URL).
+			post().
 		then().
 			assertThat().
 			statusCode(HttpStatus.SC_BAD_REQUEST);
 	}
-	
+
 	@Test
 	@DisplayName("POST same user twice, expect OK and then FORBIDDEN")
 	@Tag("POST")
@@ -134,24 +124,24 @@ public class UserResourceTest {
 				"email": "folke@caw.gull",
 				"telephone": "555-55000"
 			}""";
-		// Lägg till användaren, bör vara tillåtet en gång
+		// Add the user once, should be allowed
 		given().
 			accept(ContentType.JSON).
 			contentType(ContentType.JSON).
 			body(json).
 		when().
-			post(URL).
+			post().
 		then().
 			assertThat().
 			statusCode(HttpStatus.SC_CREATED);
-		
-		// Lägg till igen, bör inte vara tillåtet då den redan existerar
+
+		// Add the user another time, should not be allowed
 		given().
 			accept(ContentType.JSON).
 			contentType(ContentType.JSON).
 			body(json).
 		when().
-			post(URL).
+			post().
 		then().
 			assertThat().
 			statusCode(HttpStatus.SC_FORBIDDEN);
