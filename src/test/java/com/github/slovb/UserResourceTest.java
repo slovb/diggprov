@@ -20,6 +20,9 @@ import io.restassured.http.ContentType;
 
 /**
  * Tests for UserResource.
+ *
+ * Note that MockUserStorage adds test data to the system so there is some data already there. This is relevant context
+ * for some of the tests.
  */
 @QuarkusTest
 @TestHTTPEndpoint(UserResource.class)

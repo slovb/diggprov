@@ -4,7 +4,7 @@ import io.quarkus.test.Mock;
 import jakarta.inject.Singleton;
 
 /**
- * Mock implementation of UserStorage that comes with its own test data. Partially just to test mocking.
+ * Mock implementation of UserStorage that comes with its own test data.
  */
 @Mock
 @Singleton
