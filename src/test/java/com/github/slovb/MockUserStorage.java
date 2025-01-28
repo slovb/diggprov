@@ -1,0 +1,20 @@
+package com.github.slovb;
+
+import io.quarkus.test.Mock;
+import jakarta.inject.Singleton;
+
+/**
+ * Mock implementation of UserStorage that comes with its own test data. Partially just to test mocking.
+ */
+@Mock
+@Singleton
+public class MockUserStorage extends UserStorage {
+
+	public MockUserStorage() {
+		super();
+		put(new User("Kajsa Anka", "Vägen 13, 6742143 Staden", "kajsa@acme.org", "555-55532"));
+		put(new User("Kalle Anka", "Vägen 13, 6742143 Staden", "kalle@acme.org", "555-55512"));
+		put(new User("Knatte Anka", "Vägen 13, 6742143 Staden", "knatte@acme.org", "555-55565"));
+		put(new User("Lasse Ludd", "Hittepåvägen 13, 6742143 Staden", "tomas@acme.org", "555-21343"));
+	}
+}
