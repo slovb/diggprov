@@ -1,4 +1,4 @@
-package com.github.slovb;
+package com.github.slovb.digg.user;
 
 import java.util.Collection;
 import java.util.HashMap;

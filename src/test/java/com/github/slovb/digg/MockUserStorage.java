@@ -1,4 +1,7 @@
-package com.github.slovb;
+package com.github.slovb.digg;
+
+import com.github.slovb.digg.user.User;
+import com.github.slovb.digg.user.UserStorage;
 
 import io.quarkus.test.Mock;
 import jakarta.inject.Singleton;

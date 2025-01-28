@@ -1,4 +1,4 @@
-package com.github.slovb;
+package com.github.slovb.digg.user;
 
 /**
  * Represents a user.

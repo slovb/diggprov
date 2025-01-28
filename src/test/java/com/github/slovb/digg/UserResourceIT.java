@@ -1,4 +1,4 @@
-package com.github.slovb;
+package com.github.slovb.digg;
 
 import io.quarkus.test.junit.QuarkusIntegrationTest;
 
