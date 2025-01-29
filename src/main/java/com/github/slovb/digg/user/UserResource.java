@@ -3,6 +3,10 @@ package com.github.slovb.digg.user;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
+
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -29,6 +33,8 @@ public class UserResource {
 	 *
 	 * @return	a collection of the users of the userStorage
 	 */
+	@Operation(summary="Get all users")
+	@APIResponse(responseCode="200", description="A list of users")
 	@GET
 	public Collection<User> list() {
 		return userStorage.list();
@@ -45,6 +51,12 @@ public class UserResource {
 	 * @param user	user to be added to userStorage
 	 * @return 		a response with either the uri to the added resource or an error status if nothing was added
 	 */
+	@Operation(summary="Add a new user")
+	@APIResponses({
+		@APIResponse(responseCode="201", description="User added"),
+		@APIResponse(responseCode="400", description="User data is not valid"),
+		@APIResponse(responseCode="403", description="Similar user already exists")
+	})
 	@POST
 	public Response add(User user) {
 		// Validate the user
@@ -60,8 +72,7 @@ public class UserResource {
 		// Build a URI for the resource
 		URI uri;
 		try {
-			// Once this URI has meaning, a changes might be in order
-			uri = new URI(user.getKey());
+			uri = new URI("digg/user/" + user.getKey());
 		} catch (URISyntaxException e) {
 			return Response.status(500, "Key is not a valid URI").build();
 		}

@@ -1,5 +1,7 @@
 package com.github.slovb.digg.user;
 
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
 /**
  * Represents a user.
  *
@@ -57,6 +59,7 @@ public class User {
 	 *
 	 * @return	a string that uniquely identifies a user.
 	 */
+	@Schema(hidden=true)
 	public String getKey() {
 		// TODO: Consider UUID
 		return email;
@@ -68,6 +71,7 @@ public class User {
 	 *
 	 * @return	<code>true</code> if this user is valid.
 	 */
+	@Schema(hidden=true)
 	public boolean isValid() {
 		if (name == null || name.isBlank()) {
 			return false;
