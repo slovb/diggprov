@@ -53,10 +53,9 @@ public class UserStorage {
 	 * If there already is a user with that key it will get overwritten.
 	 *
 	 * @param user	the user to be put at its key
-	 * @return		the user that was put at its key
 	 */
-	public User put(User user) {
+	public void put(User user) {
 		// Quarkus blog seem to state I do not need to worry about threads, so I'll defer that to a later time.
-		return users.put(user.getKey(), user);
+		users.put(user.getKey(), user);
 	}
 }

@@ -12,6 +12,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
+import io.quarkus.logging.Log;
 
 /**
  * Resource class for all of the users.
@@ -74,11 +75,14 @@ public class UserResource {
 		try {
 			uri = new URI("digg/user/" + user.getKey());
 		} catch (URISyntaxException e) {
+			Log.error("Key is not a valid URI", e);
 			return Response.status(500, "Key is not a valid URI").build();
 		}
 
 		// Add the user
+		Log.debug("Adding user");
 		userStorage.put(user);
+		Log.info("User added");
 		return Response.created(uri).build();
 	}
 }
