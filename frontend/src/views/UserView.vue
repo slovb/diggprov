@@ -1,22 +1,23 @@
 <script setup lang="ts">
 import { User } from '@/models/user'
+import { useUserStore } from '@/stores/user'
 import { computed, ref } from 'vue'
 
-const users = ref([new User('Alice'), new User('Bob'), new User('Lotta')])
+const userStore = useUserStore()
 const pageNumber = ref(0)
 const pageSize = 4
 const lastPage = computed(() => {
-  return Math.ceil(users.value.length / pageSize) - 1
+  return Math.ceil(userStore.users.length / pageSize) - 1
 })
 
 const page = computed(() => {
   const pos = pageSize * pageNumber.value
-  return users.value.slice(pos, pos + pageSize)
+  return userStore.users.slice(pos, pos + pageSize)
 })
 
 const newUserName = ref('')
 function addUser() {
-  users.value.push(new User(newUserName.value))
+  userStore.addUser(new User(newUserName.value))
   newUserName.value = ''
 }
 </script>
