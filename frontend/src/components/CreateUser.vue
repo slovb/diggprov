@@ -6,7 +6,7 @@ import { ref } from 'vue'
 const userStore = useUserStore()
 
 const newUserName = ref('')
-function addUser() {
+function createUser() {
   userStore.addUser(new User(newUserName.value))
   newUserName.value = ''
 }
@@ -14,7 +14,10 @@ function addUser() {
 
 <template>
   <div>
-    <input v-model="newUserName" />
-    <button @click="addUser">Add User</button>
+    <label
+      >Name:
+      <input v-model="newUserName" @keyup.enter="createUser" />
+    </label>
+    <button @click="createUser">Create</button>
   </div>
 </template>

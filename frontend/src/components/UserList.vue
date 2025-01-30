@@ -2,16 +2,23 @@
 import { useUserStore } from '@/stores/user'
 import { computed, ref } from 'vue'
 
+const props = defineProps({
+  pageSize: {
+    type: Number,
+    default: 20,
+  },
+})
+
 const userStore = useUserStore()
 const pageNumber = ref(0)
-const pageSize = 4
 const lastPage = computed(() => {
-  return Math.ceil(userStore.users.length / pageSize) - 1
+  return Math.ceil(userStore.users.length / props.pageSize) - 1
 })
 
 const page = computed(() => {
-  const pos = pageSize * pageNumber.value
-  return userStore.users.slice(pos, pos + pageSize)
+  const start = pageNumber.value * props.pageSize
+  const end = start + props.pageSize
+  return userStore.users.slice(start, end)
 })
 </script>
 

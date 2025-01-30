@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import User from '@/components/User.vue'
+import UserList from '@/components/UserList.vue'
 import CreateUser from '@/components/CreateUser.vue'
 </script>
 
 <template>
   <main>
-    <User></User>
+    <UserList :page-size="2"></UserList>
     <CreateUser></CreateUser>
   </main>
 </template>
