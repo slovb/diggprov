@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import UserListPager from './UserListPager.vue'
 import UserListRow from './UserListRow.vue'
 import { usePageStore } from '@/stores/page'
 
@@ -20,5 +19,4 @@ const pageStore = usePageStore()
     </tbody>
   </table>
   <p v-else>No users found here</p>
-  <UserListPager></UserListPager>
 </template>

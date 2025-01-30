@@ -204,20 +204,21 @@ const items = computed(() => {
 }
 .pager li {
   display: inline-block;
-  text-align: center;
   margin: 0 2px;
   padding: 0;
+  text-align: center;
   vertical-align: middle;
 }
 .pager a,
 .pager span {
-  display: inline-block;
-  box-sizing: border-box;
   border-radius: 3px;
+  box-sizing: border-box;
+  display: inline-block;
   min-height: 32px;
-  width: 100%;
   min-width: 32px;
   padding: 8px;
+  user-select: none;
+  width: 100%;
 }
 .pager .active {
   font-weight: bold;
