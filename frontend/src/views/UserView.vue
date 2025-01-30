@@ -5,7 +5,7 @@ import CreateUser from '@/components/CreateUser.vue'
 
 <template>
   <main>
-    <UserList :page-size="2"></UserList>
+    <UserList></UserList>
     <CreateUser></CreateUser>
   </main>
 </template>
