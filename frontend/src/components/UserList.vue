@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useUserStore } from '@/stores/user'
 import { computed, ref } from 'vue'
+import UserListRow from './UserListRow.vue'
 
 const props = defineProps({
   pageSize: {
@@ -23,13 +24,19 @@ const page = computed(() => {
 </script>
 
 <template>
-  <div>
-    <ul>
-      <li v-for="user in page" :key="user.name">
-        {{ user.name }}
-      </li>
-    </ul>
-  </div>
+  <table v-if="page.length">
+    <thead>
+      <tr>
+        <th>Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="user in page" :key="user.name">
+        <UserListRow :user="user"></UserListRow>
+      </tr>
+    </tbody>
+  </table>
+  <p v-else>No users found</p>
   <div>
     <button v-if="pageNumber > 0" @click="pageNumber--">-</button>
     <p>Page {{ pageNumber }}</p>
