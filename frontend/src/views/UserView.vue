@@ -5,10 +5,30 @@ import UserListPager from '@/components/UserListPager.vue'
 </script>
 
 <template>
-  <main>
+  <header>
     <h1>Users</h1>
-    <UserListPager></UserListPager>
-    <UserList></UserList>
-    <CreateUser></CreateUser>
+  </header>
+  <main class="main">
+    <div>
+      <UserListPager></UserListPager>
+      <UserList></UserList>
+    </div>
+    <div>
+      <CreateUser></CreateUser>
+    </div>
   </main>
 </template>
+
+<style>
+.main > div {
+  padding-top: 2em;
+}
+
+@media (min-width: 1024px) {
+  .main {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    padding: 0 2rem;
+  }
+}
+</style>

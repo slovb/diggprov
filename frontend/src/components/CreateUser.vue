@@ -14,6 +14,7 @@ function createUser() {
 
 <template>
   <div>
+    <h2>Create user</h2>
     <label
       >Name:
       <input v-model="newUserName" @keyup.enter="createUser" />
