@@ -1,13 +1,6 @@
 <script setup lang="ts">
+import { User } from '@/models/user'
 import { computed, ref } from 'vue'
-
-class User {
-  name: string
-
-  constructor(name: string) {
-    this.name = name
-  }
-}
 
 const users = ref([new User('Alice'), new User('Bob'), new User('Lotta')])
 const pageNumber = ref(0)
