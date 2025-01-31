@@ -1,11 +1,13 @@
 package com.github.slovb.digg.user;
 
+import java.util.UUID;
+
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 /**
  * Represents a user.
  *
- * The user is uniquely identified by their email field.
+ * The user is uniquely identified by the uuid field.
  */
 public class User {
 
@@ -30,11 +32,17 @@ public class User {
 	 * The users telephone number in string form.
 	 */
 	public String telephone;
-	
+
+	/**
+	 * The users UUID in String form
+	 */
+	public final String uuid;
+
 	/**
 	 * Default constructor. Required for JSON serialization.
 	 */
 	public User() {
+		uuid = UUID.randomUUID().toString();
 	}
 	
 	/**
@@ -46,6 +54,7 @@ public class User {
 	 * @param telephone
 	 */
 	public User(String name, String address, String email, String telephone) {
+		this();
 		this.name = name;
 		this.address = address;
 		this.email = email;
@@ -55,14 +64,13 @@ public class User {
 
 	/**
 	 * Returns a key that uniquely identifies the user.
-	 * Currently that is simply the email as given.
+	 * Currently that is an uuid that is generated upon creation
 	 *
 	 * @return	a string that uniquely identifies a user.
 	 */
 	@Schema(hidden=true)
 	public String getKey() {
-		// TODO: Consider UUID
-		return email;
+		return uuid;
 	}
 
 	/**

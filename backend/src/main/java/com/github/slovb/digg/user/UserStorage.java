@@ -29,6 +29,9 @@ public class UserStorage {
 	 */
 	Map<String, User> users = new HashMap<String, User>();
 
+	/**
+	 * Read the initial_data.json resource and populate users with that data.
+	 */
 	public UserStorage() {
 		try (InputStream in = getClass().getResourceAsStream("/initial_data.json")) {
 			Log.debug("Reading initial_data.json");
@@ -43,6 +46,7 @@ public class UserStorage {
 			Log.error("Issue reading initial_data.json", e);
 		}
 	}
+
 	/**
 	 * Returns a collection of the values contained in this storage.
 	 *
@@ -77,7 +81,7 @@ public class UserStorage {
 		// Quarkus blog seem to state I do not need to worry about threads, so I'll defer that to a later time.
 		users.put(user.getKey(), user);
 	}
-	
+
 	/**
 	 * Remove all users
 	 */
