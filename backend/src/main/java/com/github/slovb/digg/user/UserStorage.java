@@ -1,10 +1,17 @@
 package com.github.slovb.digg.user;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import jakarta.inject.Singleton;
+import io.quarkus.logging.Log;
 
 /**
  * Storage class for all of the users.
@@ -24,6 +31,20 @@ public class UserStorage {
 	 */
 	Map<String, User> users = new HashMap<String, User>();
 
+	public UserStorage() {
+		try (InputStream in = getClass().getResourceAsStream("/initial_data.json")) {
+			Log.debug("Reading initial_data.json");
+			ObjectMapper objectMapper = new ObjectMapper();
+			User[] init = objectMapper.readValue(in,  User[].class);
+			for (User user: init) {
+				put(user);
+			}
+			Log.info(String.format("%s users added from initial_data.json", init.length));
+		}
+		catch (IOException e) {
+			Log.error("Issue reading initial_data.json", e);
+		}
+	}
 	/**
 	 * Returns a collection of the values contained in this storage.
 	 *
@@ -57,5 +78,13 @@ public class UserStorage {
 	public void put(User user) {
 		// Quarkus blog seem to state I do not need to worry about threads, so I'll defer that to a later time.
 		users.put(user.getKey(), user);
+	}
+	
+	/**
+	 * Remove all users
+	 */
+	public void clear() {
+		users.clear();
+		Log.info("Users map cleared");
 	}
 }
