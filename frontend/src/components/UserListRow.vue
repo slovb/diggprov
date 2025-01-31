@@ -14,4 +14,7 @@ const user = reactive(props.user)
 
 <template>
   <td>{{ user.name }}</td>
+  <td>{{ user.address }}</td>
+  <td>{{ user.email }}</td>
+  <td>{{ user.telephone }}</td>
 </template>

@@ -10,6 +10,9 @@ const pageStore = usePageStore()
     <thead>
       <tr>
         <th>Name</th>
+        <th>Address</th>
+        <th>Email</th>
+        <th>Telephone</th>
       </tr>
     </thead>
     <tbody>
