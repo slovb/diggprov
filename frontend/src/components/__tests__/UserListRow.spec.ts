@@ -6,7 +6,7 @@ import UserListRow from '../UserListRow.vue'
 
 describe('UserListRow', () => {
   it('renders name properly', () => {
-    const user = new User('Testpilot', 'address', 'email', 'telephone')
+    const user = new User('Testpilot', 'address', 'email', 'telephone', '1-2-3-4')
     const wrapper = mount(UserListRow, { props: { user: user } })
     expect(wrapper.text()).toContain('Testpilot')
   })

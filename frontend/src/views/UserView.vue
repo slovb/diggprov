@@ -27,7 +27,8 @@ import UserListPager from '@/components/UserListPager.vue'
 @media (min-width: 1024px) {
   .main {
     display: grid;
-    grid-template-columns: 3fr 1fr;
+    gap: 4em;
+    grid-template-columns: 4fr 1fr;
     padding: 0 2rem;
   }
 }

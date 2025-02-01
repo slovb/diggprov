@@ -4,53 +4,45 @@ import { ref } from 'vue'
 
 const userStore = useUserStore()
 
-const newUserName = ref('')
-const newUserAddress = ref('')
-const newUserEmail = ref('')
-const newUserTelephone = ref('')
+const name = ref('')
+const address = ref('')
+const email = ref('')
+const telephone = ref('')
+
+/**
+ * Request to create the user and if successful clear the form
+ */
 async function createUser() {
-  await userStore.createUser(
-    newUserName.value,
-    newUserAddress.value,
-    newUserEmail.value,
-    newUserTelephone.value,
+  const success = await userStore.createUser(
+    name.value,
+    address.value,
+    email.value,
+    telephone.value,
   )
-  newUserName.value = ''
-  newUserAddress.value = ''
-  newUserEmail.value = ''
-  newUserTelephone.value = ''
+  if (success) {
+    name.value = ''
+    address.value = ''
+    email.value = ''
+    telephone.value = ''
+  }
 }
 </script>
 
 <template>
-  <div>
-    <h2>Create user</h2>
-    <ul>
-      <li>
-        <label
-          >Name:
-          <input v-model="newUserName" />
-        </label>
-      </li>
-      <li>
-        <label
-          >Address:
-          <input v-model="newUserAddress" />
-        </label>
-      </li>
-      <li>
-        <label
-          >Email:
-          <input v-model="newUserEmail" />
-        </label>
-      </li>
-      <li>
-        <label
-          >Telephone:
-          <input v-model="newUserTelephone" />
-        </label>
-      </li>
-      <button @click="createUser">Create</button>
-    </ul>
+  <div class="form-widget">
+    <h2 class="title">Create user</h2>
+    <div class="input-grid">
+      <label for="new-name">Name:</label>
+      <input id="new-name" v-model="name" placeholder="Name" />
+      <label for="new-address">Address:</label>
+      <input id="new-address" v-model="address" placeholder="Address" />
+      <label for="new-email">Email:</label>
+      <input id="new-email" v-model="email" placeholder="Email" />
+      <label for="new-telephone">Telephone:</label>
+      <input id="new-telephone" v-model="telephone" placeholder="Telephone" />
+    </div>
+    <div class="button-group">
+      <button @click.prevent="createUser">Create</button>
+    </div>
   </div>
 </template>

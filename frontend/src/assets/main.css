@@ -1,4 +1,5 @@
 @import './base.css';
+@import './form-widget.css';
 
 #app {
   max-width: 1280px;
