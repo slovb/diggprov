@@ -35,7 +35,7 @@ public class UserStorageTest {
 		}
 		assertEquals(3, ducks);
 	}
-	
+
 	@Test
 	@DisplayName("Expect able to add a user")
 	@Tag("LOCAL")

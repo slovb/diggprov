@@ -71,6 +71,16 @@ public class UserStorage {
 	}
 
 	/**
+	 * Returns the user with the given key, or <code>null</code> if no such user can be found
+	 *
+	 * @param key the key of the user
+	 * @return the user
+	 */
+	public User get(String key) {
+		return users.get(key);
+	}
+
+	/**
 	 * Will put a user in storage at its specified key.
 	 *
 	 * If there already is a user with that key it will get overwritten.
@@ -80,6 +90,15 @@ public class UserStorage {
 	public void put(User user) {
 		// Quarkus blog seem to state I do not need to worry about threads, so I'll defer that to a later time.
 		users.put(user.key(), user);
+	}
+	
+	/**
+	 * Remove user represented by key if present
+	 *
+	 * @param key key of user to remove
+	 */
+	public void removeKey(String key) {
+		users.remove(key);
 	}
 
 	/**

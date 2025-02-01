@@ -44,9 +44,9 @@ public class User {
 	public User() {
 		uuid = UUID.randomUUID().toString();
 	}
-	
+
 	/**
-	 * Convenience constructor setting all the attributes.
+	 * Setting all the attributes except UUID
 	 *
 	 * @param name
 	 * @param address
@@ -60,7 +60,24 @@ public class User {
 		this.email = email;
 		this.telephone = telephone;
 	}
-	
+
+	/**
+	 * Setting all the attributes
+	 *
+	 * @param name
+	 * @param address
+	 * @param email
+	 * @param telephone
+	 * @param uuid
+	 */
+	public User(String name, String address, String email, String telephone, String uuid) {
+		this.name = name;
+		this.address = address;
+		this.email = email;
+		this.telephone = telephone;
+		this.uuid = uuid;
+	}
+
 
 	/**
 	 * Returns a key that uniquely identifies the user.
@@ -68,7 +85,6 @@ public class User {
 	 *
 	 * @return	a string that uniquely identifies a user.
 	 */
-	@Schema(hidden=true)
 	public String key() {
 		return uuid;
 	}
@@ -79,7 +95,6 @@ public class User {
 	 *
 	 * @return	<code>true</code> if this user is valid.
 	 */
-	@Schema(hidden=true)
 	public boolean validate() {
 		if (name == null || name.isBlank()) {
 			return false;
