@@ -2,6 +2,7 @@
   background-color: var(--color-background-soft);
   max-width: 450px;
   padding: 1em;
+  margin-bottom: 3em;
 }
 .form-widget h2 {
   padding-bottom: 1em;

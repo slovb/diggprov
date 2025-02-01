@@ -1,8 +1,10 @@
+import { getUsers } from '@/api'
 import { User, userComparison } from '@/models/user'
 import { defineStore } from 'pinia'
-import { ref, type Ref } from 'vue'
+import { computed, ref } from 'vue'
+import { getMessageStore } from './message'
 
-const API_URL = 'http://localhost:8080/digg/user/'
+const log = getMessageStore()
 
 /**
  * Manage the list of users
@@ -11,100 +13,92 @@ export const useUserStore = defineStore('user', () => {
   /**
    * List of all the users
    */
-  const users: Ref<User[]> = ref([])
+  const _users = ref<User[]>([])
+
+  /**
+   * Sorted list of all the users
+   */
+  const users = computed(() => {
+    return _users.value.concat().sort(userComparison)
+  })
+
+  // internal loading counter
+  const _loadingCounter = ref(0)
 
   /**
    * True if api requests are in progress
    */
-  const loading = ref(false)
+  const loading = computed(() => _loadingCounter.value === 0)
 
   /**
-   * Send a GET request to the API, interpret the data and sort it
+   * Start loading
    */
-  async function refreshData() {
-    loading.value = true
-    const newUsers: User[] = await (await fetch(API_URL)).json()
-    newUsers.sort(userComparison)
-    users.value = newUsers
-    loading.value = false
+  function startLoading() {
+    _loadingCounter.value += 1
   }
 
   /**
+   * Stop loading
+   */
+  function stopLoading() {
+    _loadingCounter.value = Math.min(_loadingCounter.value - 1, 0)
+  }
+
+  /**
+   * Add a user to users
    *
    * @param user
    */
   function addUser(user: User) {
-    const newUsers = users.value.concat([user])
-    newUsers.sort(userComparison)
-    users.value = newUsers
+    _users.value.push(user)
   }
 
   /**
-   * Send a POST request with the user data to the backend trying to create a user.
+   * Update first user with the same uuid as the given user
    *
-   * If successful return true and add the user to users
-   *
-   * @param name
-   * @param address
-   * @param email
-   * @param telephone
-   * @returns true if successful
+   * @param user new user details
    */
-  async function createUser(
-    name: string,
-    address: string,
-    email: string,
-    telephone: string,
-  ): Promise<boolean> {
-    loading.value = true
-
-    // Make POST
-    const response = await fetch(API_URL, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: name,
-        address: address,
-        email: email,
-        telephone: telephone,
-      }),
-    })
-
-    // Deal with the response
-    // Error messaging is done through alerts, may develop Message component later
-    if (response.status == 201) {
-      const location = response.headers.get('Location')
-      const parts = location?.split('/')
-      const uuid = parts?.pop()
-      if (uuid === undefined) {
-        alert('Error, got empty UUID from backend')
-        return false
-      }
-
-      // May consider refetching this User later
-      addUser(new User(name, address, email, telephone, uuid))
-      console.log(uuid)
-    } else if (response.status == 400) {
-      // TODO handle errors
-      alert('Bad request, did you forget a parameter?')
-      return false
-    } else if (response.status == 403) {
-      // TODO handle errors
-      alert('Error, user already exists')
-      return false
-    } else {
-      alert('Error, unknown cause')
-      return false
+  function updateUser(user: User) {
+    const index = _users.value.findIndex((u) => u.uuid == user.uuid)
+    if (index !== -1) {
+      const toUpdate = _users.value[index]
+      toUpdate.name = user.name
+      toUpdate.address = user.address
+      toUpdate.email = user.email
+      toUpdate.telephone = user.telephone
     }
-    return true
   }
 
-  // Immediately refresh data, should possibly be handled in a watcher exposing an
-  // interface for requesting refreshes that is not async
-  refreshData()
+  /**
+   * Remove first user with the same uuid as the given user
+   *
+   * @param user user to remove
+   */
+  function removeUser(user: User) {
+    const index = _users.value.findIndex((u) => u.uuid == user.uuid)
+    if (index !== -1) {
+      _users.value.splice(index, 1)
+    }
+  }
 
-  return { users, loading, createUser }
+  /**
+   * Initially load the users from the API
+   */
+  async function initialize() {
+    startLoading()
+    try {
+      _users.value = await getUsers()
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error)
+        log.addError(error.message)
+      } else {
+        throw error
+      }
+    }
+    stopLoading()
+  }
+  initialize() // no await
+
+  return { users, loading, addUser, updateUser, removeUser, startLoading, stopLoading }
 })

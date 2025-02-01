@@ -1,8 +1,13 @@
 <script setup lang="ts">
-import { useUserStore } from '@/stores/user'
 import { ref } from 'vue'
+import { useUserStore } from '@/stores/user'
+import { useSelectedUserStore } from '@/stores/selectedUser'
+import { createUser, getUser } from '@/api'
+import { getMessageStore } from '@/stores/message'
 
 const userStore = useUserStore()
+const selectedUserStore = useSelectedUserStore()
+const log = getMessageStore()
 
 const name = ref('')
 const address = ref('')
@@ -12,19 +17,26 @@ const telephone = ref('')
 /**
  * Request to create the user and if successful clear the form
  */
-async function createUser() {
-  const success = await userStore.createUser(
-    name.value,
-    address.value,
-    email.value,
-    telephone.value,
-  )
-  if (success) {
-    name.value = ''
-    address.value = ''
-    email.value = ''
-    telephone.value = ''
+async function create() {
+  userStore.startLoading()
+  try {
+    const uuid = await createUser(name.value, address.value, email.value, telephone.value)
+    const user = await getUser(uuid)
+    if (user !== undefined) {
+      userStore.addUser(user)
+      selectedUserStore.selectUser(user)
+
+      name.value = ''
+      address.value = ''
+      email.value = ''
+      telephone.value = ''
+    } else {
+      log.addError('Created user was not found on server, very confusing')
+    }
+  } catch (error) {
+    log.handleError(error)
   }
+  userStore.stopLoading()
 }
 </script>
 
@@ -42,7 +54,7 @@ async function createUser() {
       <input id="new-telephone" v-model="telephone" placeholder="Telephone" />
     </div>
     <div class="button-group">
-      <button @click.prevent="createUser">Create</button>
+      <button @click.prevent="create">Create</button>
     </div>
   </div>
 </template>

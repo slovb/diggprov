@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import { useSelectedUserStore } from '@/stores/selectedUser'
 import UserListRow from './UserListRow.vue'
 import { usePageStore } from '@/stores/page'
 
 const pageStore = usePageStore()
+const selectedUserStore = useSelectedUserStore()
 </script>
 
 <template>
@@ -13,10 +15,15 @@ const pageStore = usePageStore()
         <th>Address</th>
         <th>Email</th>
         <th>Telephone</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="user in pageStore.page" :key="user.name">
+      <tr
+        v-for="user in pageStore.page"
+        :key="user.uuid"
+        :class="{ selected: user === selectedUserStore.user }"
+      >
         <UserListRow :user="user"></UserListRow>
       </tr>
     </tbody>
@@ -42,5 +49,9 @@ th,
 td {
   min-width: 120px;
   padding: 2px 1em;
+}
+
+tr.selected {
+  background-color: var(--color-background-soft);
 }
 </style>

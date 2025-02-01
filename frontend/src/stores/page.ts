@@ -1,3 +1,4 @@
+import type { User } from '@/models/user'
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import { useUserStore } from './user'
@@ -57,6 +58,20 @@ export const usePageStore = defineStore('page', () => {
   })
 
   /**
+   * Return the pageNumber at which page the user is at or undefined
+   *
+   * @param user
+   * @returns pageNumber containing the user or undefined if unknown user
+   */
+  function findPageNumberOfUser(user: User): number | undefined {
+    const index = userStore.users.indexOf(user)
+    if (index === -1) {
+      return undefined
+    }
+    return Math.floor(index / pageSize.value)
+  }
+
+  /**
    * Set the page number
    *
    * @param num new page number
@@ -72,6 +87,7 @@ export const usePageStore = defineStore('page', () => {
     pagesAfter,
     pagesBefore,
     pagesTotal,
+    findPageOfUser: findPageNumberOfUser,
     setPageNumber,
   }
 })

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import CreateUser from '@/components/CreateUser.vue'
+import EditUser from '@/components/EditUser.vue'
 import UserList from '@/components/UserList.vue'
 import UserListPager from '@/components/UserListPager.vue'
 </script>
@@ -12,9 +13,11 @@ import UserListPager from '@/components/UserListPager.vue'
     <div>
       <UserListPager></UserListPager>
       <UserList></UserList>
+      <UserListPager></UserListPager>
     </div>
     <div>
       <CreateUser></CreateUser>
+      <EditUser></EditUser>
     </div>
   </main>
 </template>
