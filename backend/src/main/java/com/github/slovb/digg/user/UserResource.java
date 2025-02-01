@@ -61,19 +61,19 @@ public class UserResource {
 	@POST
 	public Response add(User user) {
 		// Validate the user
-		if (!user.isValid()) {
+		if (!user.validate()) {
 			return Response.status(400, "User is missing critical data").build();
 		}
 
 		// Do not allow adding a new user with a key that already exists
-		if (userStorage.containsKey(user.getKey())) {
+		if (userStorage.containsKey(user.key())) {
 			return Response.status(403, "Similar user already exists").build();
 		}
 
 		// Build a URI for the resource
 		URI uri;
 		try {
-			uri = new URI("digg/user/" + user.getKey());
+			uri = new URI("digg/user/" + user.key());
 		} catch (URISyntaxException e) {
 			Log.error("Key is not a valid URI", e);
 			return Response.status(500, "Key is not a valid URI").build();

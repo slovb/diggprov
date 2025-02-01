@@ -69,7 +69,7 @@ public class User {
 	 * @return	a string that uniquely identifies a user.
 	 */
 	@Schema(hidden=true)
-	public String getKey() {
+	public String key() {
 		return uuid;
 	}
 
@@ -80,7 +80,7 @@ public class User {
 	 * @return	<code>true</code> if this user is valid.
 	 */
 	@Schema(hidden=true)
-	public boolean isValid() {
+	public boolean validate() {
 		if (name == null || name.isBlank()) {
 			return false;
 		}

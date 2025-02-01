@@ -41,8 +41,8 @@ public class UserStorageTest {
 	@Tag("LOCAL")
 	public void testLocalAddingDoesNotChangeKey() {
 		User user = new User("Åke", "Åkes Oas, Öknen", "ake@lemo.nad", "11000101");
-		assertFalse(userStorage.containsKey(user.getKey()));
+		assertFalse(userStorage.containsKey(user.key()));
 		userStorage.put(user);
-		assertTrue(userStorage.containsKey(user.getKey()));
+		assertTrue(userStorage.containsKey(user.key()));
 	}
 }

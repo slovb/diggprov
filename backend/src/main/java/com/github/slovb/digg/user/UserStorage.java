@@ -22,7 +22,7 @@ import io.quarkus.logging.Log;
 public class UserStorage {
 
 	/**
-	 * Map of <code>user.getKey()</code> to user.
+	 * Map of <code>user.key()</code> to user.
 	 *
 	 * Uses a HashMap for easy lookup to avoid duplicates and enable specified changes.
 	 * Set to package-private to avoid reflection on injection.
@@ -79,7 +79,7 @@ public class UserStorage {
 	 */
 	public void put(User user) {
 		// Quarkus blog seem to state I do not need to worry about threads, so I'll defer that to a later time.
-		users.put(user.getKey(), user);
+		users.put(user.key(), user);
 	}
 
 	/**
