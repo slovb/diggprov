@@ -64,7 +64,7 @@ export const usePageStore = defineStore('page', () => {
    * @returns pageNumber containing the user or undefined if unknown user
    */
   function findPageNumberOfUser(user: User): number | undefined {
-    const index = userStore.users.indexOf(user)
+    const index = userStore.users.findIndex((candidate) => candidate.uuid === user.uuid)
     if (index === -1) {
       return undefined
     }
