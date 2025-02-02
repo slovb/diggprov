@@ -3,6 +3,10 @@ import { User } from '@/models/user'
 import { useSelectedUserStore } from '@/stores/selectedUser'
 import { reactive } from 'vue'
 
+/**
+ * List-row of a single user
+ */
+
 const props = defineProps({
   user: {
     type: User,

@@ -5,6 +5,10 @@ import { useSelectedUserStore } from '@/stores/selectedUser'
 import { createUser, getUser } from '@/api'
 import { getMessageStore } from '@/stores/message'
 
+/**
+ * Create user dialog
+ */
+
 const userStore = useUserStore()
 const selectedUserStore = useSelectedUserStore()
 const log = getMessageStore()
@@ -15,7 +19,7 @@ const email = ref('')
 const telephone = ref('')
 
 /**
- * Request to create the user and if successful clear the form
+ * Request to create the user and if successful select them and clear the form
  */
 async function create() {
   userStore.startLoading()

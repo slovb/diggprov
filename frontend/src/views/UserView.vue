@@ -3,6 +3,10 @@ import CreateUser from '@/components/CreateUser.vue'
 import EditUser from '@/components/EditUser.vue'
 import UserList from '@/components/UserList.vue'
 import UserListPager from '@/components/UserListPager.vue'
+
+/**
+ * The user list view with all the interactions and pagers
+ */
 </script>
 
 <template>

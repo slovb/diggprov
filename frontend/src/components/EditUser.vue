@@ -6,6 +6,10 @@ import { User } from '@/models/user'
 import { deleteUser, getUser, putUser } from '@/api'
 import { getMessageStore } from '@/stores/message'
 
+/**
+ * Edit user dialog
+ */
+
 const userStore = useUserStore()
 const selectedUserStore = useSelectedUserStore()
 const log = getMessageStore()
@@ -19,6 +23,9 @@ const isDisabled = computed(() => {
   return uuid.value === undefined || uuid.value === ''
 })
 
+/**
+ * Update the state for the inputs depending on what user is being edited.
+ */
 function updateState(user?: User) {
   if (user === undefined) {
     name.value = ''
@@ -35,6 +42,9 @@ function updateState(user?: User) {
   }
 }
 
+/**
+ * IF a new user is selected, update the state
+ */
 watch(
   () => selectedUserStore.user,
   (user?: User) => {
@@ -42,6 +52,9 @@ watch(
   },
 )
 
+/**
+ * Save changes and update the state with what is returned from the backend
+ */
 async function save() {
   const candidate = new User(name.value, address.value, email.value, telephone.value, uuid.value)
   try {
@@ -56,6 +69,9 @@ async function save() {
   }
 }
 
+/**
+ * Remove the user and unselect it
+ */
 async function remove() {
   const user = selectedUserStore.user
   if (user !== undefined) {
@@ -69,6 +85,9 @@ async function remove() {
   }
 }
 
+/**
+ * Stop selecting the user
+ */
 function unselect() {
   selectedUserStore.unselectUser()
 }

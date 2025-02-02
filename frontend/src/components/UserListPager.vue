@@ -2,18 +2,37 @@
 import { usePageStore } from '@/stores/page'
 import { computed } from 'vue'
 
+/**
+ * Overengineered while not being a great design pager for the user list.
+ *
+ * I got carried away designing a Pager that did not jump around too much, but I had fun.
+ */
+
+/**
+ * Configuration
+ */
 // When the number of pages is below this number, display all pages.
 const displayAllLimit = 7 // Must be 7 or greater
 
+/**
+ * Stores
+ */
 const pageStore = usePageStore()
 
+/**
+ * Convenience functions
+ */
+// decrement the pageNumber
 function decrement(): void {
   pageStore.setPageNumber(pageStore.pageNumber - 1)
 }
+
+// increment the page number
 function increment(): void {
   pageStore.setPageNumber(pageStore.pageNumber + 1)
 }
 
+// add 1 to the page number as users like things 1-indexed
 function displayPageNumber(num: number): string {
   return String(num + 1)
 }
@@ -23,9 +42,9 @@ let itemId = 0
 
 /**
  * an item will represent either:
- * 1. a link to a page displaying the pagenumber
- * 2. a text containing an ellipsis
- * 3. a text containing the currently active page
+ * - a link to a page displaying the pagenumber
+ * - a text containing an ellipsis
+ * - a text containing the currently active page
  */
 class Item {
   // text to display to the user
@@ -79,7 +98,11 @@ class CurrentItem extends Item {
   }
 }
 
-// Make a list of all pages as items without any ellipsis such as 1 2 3 4
+/**
+ * Make a list of all pages as items without any ellipsis such as:
+ * 1 2 3 4
+ * This is intended to be used if the list is too short for truncated pagination
+ */
 const allItems = computed(() => {
   const items: Item[] = []
   for (let i = 0; i < pageStore.pagesTotal; i++) {
@@ -92,7 +115,13 @@ const allItems = computed(() => {
   return items
 })
 
-// Make a truncated list of items such as 1 ... 6 7 8 ... 19
+/**
+ * Make a truncated list of items such as:
+ * - 1 ... 6 7 8 ... 19
+ * - 1 2 3 4 5 ... 19
+ * - 1 ... 15 16 17 18 19
+ * (the list should contain 7 items)
+ */
 const truncatedItems = computed(() => {
   // This was written assuming to be able to display 7 items and will be assembled as prefix.concat(middle).concat(postfix)
   const prefix: Item[] = []

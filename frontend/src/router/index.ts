@@ -6,7 +6,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('../views/UserView.vue'),
+      component: () => import('../views/UserView.vue'), // Simplifies setting up the stores for this project, should be resolved properly
     },
   ],
 })

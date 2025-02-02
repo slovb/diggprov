@@ -3,6 +3,10 @@ import { useSelectedUserStore } from '@/stores/selectedUser'
 import UserListRow from './UserListRow.vue'
 import { usePageStore } from '@/stores/page'
 
+/**
+ * List of users
+ */
+
 const pageStore = usePageStore()
 const selectedUserStore = useSelectedUserStore()
 </script>

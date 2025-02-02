@@ -1,3 +1,6 @@
+/**
+ * MessageLevels
+ */
 export enum MessageLevel {
   ERROR = 'Error',
   INFO = 'Info',
@@ -5,6 +8,11 @@ export enum MessageLevel {
   DEBUG = 'Debug',
 }
 
+/**
+ * Message
+ *
+ * Nostly to handle error messaging in one way for this project
+ */
 export class Message {
   text: string
   level: MessageLevel

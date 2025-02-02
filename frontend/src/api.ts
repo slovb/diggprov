@@ -3,9 +3,11 @@ import { User } from './models/user'
 const API_URL = new URL(import.meta.env.VITE_API_ENDPOINT, window.location.origin)
 
 /**
- *
+ * Parse an object and interpret it as a user
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function parseUser(entry: any): User {
+  // TODO: Write a neater solution so linting is not disabled
   return new User(
     entry.name ?? '',
     entry.address ?? '',
@@ -109,6 +111,7 @@ export async function createUser(
 }
 
 /**
+ * Send DELETE request to the api with the uuid of the given user
  *
  * @param user
  */
@@ -127,6 +130,7 @@ export async function deleteUser(user: User) {
 }
 
 /**
+ * Send PUT request to the api with the uuid of the given user
  *
  * @param user
  */
@@ -146,6 +150,7 @@ export async function putUser(user: User): Promise<void> {
     }),
   })
   if (response.status !== 200) {
+    // TODO: Fix bug, 201 is a valid status that will not happen unless multiple simultaneous users so I am not rebuilding the project to fix it now
     throw new Error('Unable to update')
   }
 }
