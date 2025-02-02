@@ -22,12 +22,12 @@ För att köra den image som byggts skriv:
 docker run -p 8080:8080 diggprov
 ```
 
-Port 8080 är viktig för att frontend är konfigurerad för att anta att den hittar backend där och då frontenden är byggd i förhand är det extra svårt att ändra det även om det finns i en konfigurationfil.
-
 ## Använd system
 
-Frontend hittas med browser på <http://localhost:8080>.
+* Frontend hittas med browser på <http://localhost:8080>.
 
-API hittas på <http://localhost:8080/digg/user/> med OpenAPI på <http://localhost:8080/q/openapi?format=json>.
+* API hittas på <http://localhost:8080/digg/user/>.
 
-Health hittas på <http://localhost:8080/q/health>.
+* OpenAPI på <http://localhost:8080/q/openapi?format=json>.
+
+* Health hittas på <http://localhost:8080/q/health>.

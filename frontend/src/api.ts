@@ -1,6 +1,6 @@
 import { User } from './models/user'
 
-const API_URL = import.meta.env.VITE_API_URL
+const API_URL = new URL(import.meta.env.VITE_API_ENDPOINT, window.location.origin)
 
 /**
  *
@@ -21,7 +21,7 @@ function parseUser(entry: any): User {
  * @return the users
  */
 export async function getUsers(): Promise<User[]> {
-  const url = new URL(API_URL)
+  const url = API_URL
   const response = await fetch(url)
   if (response.status !== 200) {
     throw new Error('Unable to get users')
@@ -48,7 +48,7 @@ export async function getUsers(): Promise<User[]> {
  * @return the user if found, otherwise undefined
  */
 export async function getUser(uuid: string): Promise<User | undefined> {
-  const url = new URL(API_URL + '/' + uuid)
+  const url = new URL(uuid, API_URL)
   const response = await fetch(url) // TODO: Safely build url
   if (response.status === 404) {
     return undefined
@@ -75,7 +75,7 @@ export async function createUser(
   email: string,
   telephone: string,
 ): Promise<string> {
-  const url = new URL(API_URL)
+  const url = API_URL
   const response = await fetch(url, {
     method: 'POST',
     headers: {
@@ -113,7 +113,7 @@ export async function createUser(
  * @param user
  */
 export async function deleteUser(user: User) {
-  const url = new URL(API_URL + '/' + user.uuid)
+  const url = new URL(user.uuid, API_URL)
   const response = await fetch(url, {
     method: 'DELETE',
     headers: {
@@ -131,7 +131,7 @@ export async function deleteUser(user: User) {
  * @param user
  */
 export async function putUser(user: User): Promise<void> {
-  const url = new URL(API_URL + '/' + user.uuid)
+  const url = new URL(user.uuid, API_URL)
   const response = await fetch(url, {
     method: 'PUT',
     headers: {
