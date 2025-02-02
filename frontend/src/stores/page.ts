@@ -7,6 +7,14 @@ const userStore = useUserStore()
 
 /**
  * Store for paging
+ *
+ * Chocies:
+ * 1. Making a page its own store:
+ *    The list view was only concerned with the current page so it made sense for that to have a concept of a page.
+ *    Then for the pager to be its own thing this needed to be communicated and a pinia store felt like the neat option.
+ *
+ * 2. PagesBefore, PagesAfter:
+ *    Addind these made the pager easier to think about.
  */
 export const usePageStore = defineStore('page', () => {
   // Hide the actual page number to limit the interface

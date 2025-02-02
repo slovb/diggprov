@@ -6,6 +6,15 @@ import { computed } from 'vue'
  * Overengineered while not being a great design pager for the user list.
  *
  * I got carried away designing a Pager that did not jump around too much, but I had fun.
+ *
+ * Choices:
+ * 1. Truncated display for long lists of pages:
+ *    As I did not know for what amount of users this component was designed to work around
+ *    I felt I wanted an option for larger amounts of users. That said I don't think the
+ *    design I went with is an improvement upon just having a forward and back button along
+ *    with a page number input field, besides just being a bit of fun. The rest of my choices
+ *    are related to this experiment that I think is failed UX so that makes them too weird
+ *    to describe.
  */
 
 /**

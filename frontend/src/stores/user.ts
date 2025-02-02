@@ -8,6 +8,12 @@ const log = getMessageStore()
 
 /**
  * Manage the list of users
+ *
+ * Choices:
+ * 1. Immediately initialize some data:
+ *    This choice was made for simplicity as I had no need for the user to be able to
+ *    refresh the list while using the page, which meant I did not write a way to
+ *    externally trigger that refresh and thus this store has to do it on startup.
  */
 export const useUserStore = defineStore('user', () => {
   /**

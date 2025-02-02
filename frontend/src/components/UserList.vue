@@ -5,6 +5,16 @@ import { usePageStore } from '@/stores/page'
 
 /**
  * List of users
+ *
+ * Choices:
+ * 1. Extracting the row into its own component:
+ *    This made the code neater, but I always find it a bit treacherous with tables as this parent component
+ *    imposes that the child component has to contain <td>s and they have to be in the order of the table head.
+ *    That sounds too strongly coupled, but for now it is the simple solution.
+ *
+ * 2. Not displaying a loading spinner:
+ *    I did not get around to designing one and felt like that bit of UX was maybe not a part of the task at hand.
+ *    Thus it had a low priority for me.
  */
 
 const pageStore = usePageStore()

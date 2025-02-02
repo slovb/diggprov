@@ -7,6 +7,15 @@ import { getMessageStore } from '@/stores/message'
 
 /**
  * Create user dialog
+ *
+ * Choices:
+ * 1. Not extracting the input grid into its own component:
+ *    I thought this component and the edit component would be more different until I actually wrote it.
+ *    Both component would be simpler if it was extracted.
+ *
+ * 2. Create starts and stops loading:
+ *    As create should modify the user store it should be triggering a load. Start loading could possibly
+ *    have been async though and create awaiting it.
  */
 
 const userStore = useUserStore()

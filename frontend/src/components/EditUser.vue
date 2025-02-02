@@ -8,6 +8,12 @@ import { getMessageStore } from '@/stores/message'
 
 /**
  * Edit user dialog
+ *
+ * Choices:
+ * 1. Using watch to clear the state:
+ *    I needed to know when the selected user changes and watching the object directly seems
+ *    like the simplest way to do it. That said I saw some weird behavior at times so it might
+ *    not be the way to do it properly and it should be investigated further.
  */
 
 const userStore = useUserStore()

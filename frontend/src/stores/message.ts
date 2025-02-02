@@ -6,6 +6,12 @@ import { ref } from 'vue'
  * MessageStore
  *
  * Mostly to handle error messages as alerts for this app as I did not make a message component
+ *
+ * Choices:
+ * 1. Making this store:
+ *    I got in the mindset of what I need for a less simple app and I know I need a messaging system.
+ *    That said, for this sample it is not really needed and only the handleError function is actually
+ *    used.
  */
 export const getMessageStore = defineStore('message', () => {
   const messages = ref<Message[]>([])
