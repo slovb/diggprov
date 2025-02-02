@@ -12,6 +12,29 @@ import jakarta.inject.Singleton;
 import io.quarkus.logging.Log;
 
 /**
+ * Choices:
+ *
+ * 1. UserStorage is a Singleton:
+ *    I do not think it matters too much in this specific program, but in general this would be a shared resource with
+ *    only one collection of data in memory.
+ *
+ * 2. Use of HashMap:
+ *    I wanted a map for easy lookup. This is the simplest one. I tried to search out if I needed to be thread safe,
+ *    but a reasonably official blog said to just trust Quarkus for this. When I have the time I will research the truth
+ *    of this as I want to understand why.
+ *
+ * 3. Loading all the initial data in the constructor:
+ *    This is me going for the simple solution for this task as any deferring of it gives me testing terrors I do not
+ *    want to resolve for this task.
+ *
+ * 4. Not doing any sorting:
+ *    I had the need to sort the data in the frontend as it is only fetching all of the users on the initial page load
+ *    and for any additions or changes it just fetches the affected users data and resorts the list. Hence it was
+ *    simpler to just handle all of that in the frontend. That said I think it would make for easier page loads in
+ *    the frontend if list was sorted and the frontend knew.
+ */
+
+/**
  * Storage class for all of the users.
  *
  * Stores the users in memory with no persistence. Is a singleton 

@@ -2,7 +2,17 @@ package com.github.slovb.digg.user;
 
 import java.util.UUID;
 
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
+/**
+ * Choices:
+ *
+ * 1. Use of UUID:
+ * 	  I needed a key for the frontend and backend to talk about specific items, mostly for GET/key, PUT/key, DELETE/key.
+ *    UUIDs are seemingly becoming a standard for these task so I wanted to try using it in a sample system.
+ *
+ * 2. Validate function:
+ *    I think it makes sense that the object itself should have the most context for validation. That said I did not
+ *    spend time writing anything realistic, but just checking that there is some data.
+ */
 
 /**
  * Represents a user.
@@ -106,6 +116,9 @@ public class User {
 			return false;
 		}
 		if (telephone == null || telephone.isBlank()) {
+			return false;
+		}
+		if (uuid == null || uuid.isBlank()) {
 			return false;
 		}
 		return true;

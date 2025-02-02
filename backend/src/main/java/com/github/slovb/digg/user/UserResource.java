@@ -1,9 +1,8 @@
 package com.github.slovb.digg.user;
 
 import java.net.URI;
+
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Collection;
 
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -17,6 +16,26 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
 import io.quarkus.logging.Log;
+
+/**
+ * Choices:
+ *
+ * 1. Extracting the user storage system:
+ *    At first this resource class had all of the data manipulation. That was messy and strongly coupled to the data
+ *    structure. Thus I extracted that functionality to its own UserStorage class.
+ *
+ * 2. Injecting the UserStorage:
+ *    I wanted an even looser coupling so that for testing I could have a MockUserSTorage with testable data.
+ *
+ * 3. Only the UUID is unique about the User:
+ *    Normally I would probably have the email be uniquely identifying as well, but I found it a bit funny in
+ *    practice to not enforce that and I have heard of strange (to me) cases where multiple people use the same email 
+ *    address. As a side effect POST is mostly idempotent unless an UUID is specified.
+ *
+ * 4. Allowing users to specify UUID in POST:
+ *    This was useful for testing and as PUT allows creation here there is a mechanism where they could create a User
+ *    with a specific UUID. I would make sure to think this through properly for an application going into production.
+ */
 
 /**
  * Resource class for all of the users.
